@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas Panel</title>
+    <style>
+        body,html{
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        #cav{
+            border: 2px solid black;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 0 10px black;
+            -moz-box-shadow: 0 0 10px black;
+            box-shadow: 0 0 10px black    ;
+        }
+        #bk{
+            margin: 10px auto;
+            width: 400px;
+            height: 36px;
+        }
+    .bk{
+        text-align: center;
+        width: 20px;
+        height: 20px;
+        margin: 12px;
+        display: inline-block;
+        border: 1px dotted gray;
+    }
+    </style>
+</head>
+<body>
+
+<!--背景-->
+<div id="bk"></div>
+
+<!--画板-->
+<canvas id="cav" width="400" height="300"></canvas>
+<script src="../lib/jquery/jquery.min.js"></script>
+<script>
+    // 定义画笔颜色
+    var bColor = ['#000000','#999999','#cc66ff','#ff0000','#ff9900','#ffff00','#008000','#00ccff'];
+    // 当前画笔颜色
+    var col = bColor[0];
+
+    // 初始化调色板
+    function initBrush() {
+        for(var i=0;i<bColor.length;i++){
+            var bk = $('<span class="bk"></span>')
+                    .css('background-color',bColor[i])
+                    .click(function () {
+                        col = $(this).css('background-color');
+                    });
+            $('#bk').append(bk);
+        }
+    }
+
+    // 初始化画板
+    function initPainter() {
+        // 绑定绘图canvas
+        var can = $('#cav'),self = this, x=0,y=0;
+        var ctx = can[0].getContext('2d');
+        ctx.lineWidth = 2;
+        // 绑定鼠标按下的时间
+        can.on('mousedown',function (e) {
+            // 消除默认事件
+            e.preventDefault();
+            // 设置画笔颜色
+            ctx.strokeStyle = col;
+            // 获取鼠标的位置
+            x = e.offsetX;
+            y = e.offsetY;
+            // 开始画路径
+            ctx.beginPath();
+            ctx.moveTo(x,y);
+            // 绑定移动事件
+            can.on('mousemove',function (e) {
+                var nx = event.offsetX,
+                    ny = event.offsetY;
+                ctx.lineTo(nx,ny);
+                ctx.stroke();
+                x = nx;
+                y = ny;
+            });
+
+            // 绑定抬起事件
+            can.on('mouseup',function () {
+                // 事件移动事件
+                can.off('mousemove');
+            })
+        })
+    }
+
+    $(function () {
+        initBrush();
+        initPainter();
+    })
+
+
+
+
+</script>
+</body>
+</html>

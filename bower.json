@@ -1,0 +1,17 @@
+{
+  "name": "Html5Game-Demos",
+  "homepage": "https://github.com/ycjcl868/Html5Game-Demos",
+  "authors": [
+    "信鑫-King <45808948@qq.com>"
+  ],
+  "description": "Kylin",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
