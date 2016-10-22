@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>地理定位</title>
+    <script src="../lib/jquery/jquery.min.js"></script>
+</head>
+<body>
+<input type="button" id="btnLocation" value="获取地理位置">
+
+
+<script>
+    // 检测是否支持地理位置
+    function isSupportGeo() {
+        return (navigator.geolocation!=null);
+    }
+    // 绑定click事件
+    $('#btnLocation').click(function () {
+        if(!isSupportGeo()){
+            alert('浏览器不支持定位');
+        }else{
+            navigator.geolocation.getCurrentPosition(doSucc,doFail);
+        }
+    });
+
+    // 处理成功事件
+    function doSucc(position) {
+        var lng = position.coords.longitude;  // 经度
+        var lat = position.coords.latitude;   // 纬度
+        alert('经度为:'+lng+',  纬度'+lat);
+    }
+    // 处理失败事件
+    function doFail(error) {
+        var errors = ['拒绝地理信息服务','获取不到地址信息','获取信息超时'];
+        alert(errors[error+1]);
+
+    }
+
+</script>
+
+</body>
+</html>
