@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网络编程</title>
+    <script src="../lib/jquery/jquery.min.js"></script>
+    <script src="../lib/socket.io-client/socket.io.js"></script>
+    <script>
+        /**
+         * 实时双向通信技术 WebSocket
+         */
+        $(function () {
+           // 绑定建立连接
+            $('#btnConn').click(function () {
+                connect();
+                sendMsg();
+            });
+            // 绑定发送消息
+//            $('#btnSend').click(function () {
+
+//            });
+            $(document).mousemove(function (e) {
+                sendMsg(e.pageX,e.pageY);
+            })
+        });
+
+        // 定义全局客户端套接字
+        var socket = null,
+                isFirstConnect = true;
+        // 连接服务器
+        function connect() {
+            socket = io.connect('http://'+$('#host').val()+":9000",{'reconnect':false});
+            // 注册连接事件
+            socket.on('connect',function () {
+                alert('连接服务器成功');
+                // 如果是第一次连接，注册事件
+                if(isFirstConnect){
+                    isFirstConnect = false;
+                    regEvent();
+                }else{
+                    socket.socket.reconnect();
+                }
+            });
+
+            socket.on('disconnect',function () {
+                alert('没有连接上');
+            })
+        }
+
+        //注册收到消息事件
+        function regEvent() {
+            socket.on('message',function (msg) {
+                $('#rmsg').text($('#rmsg').text()+msg+'\r\n');
+            })
+        }
+
+        // 发送消息事件
+        function sendMsg(x,y) {
+            if(socket!=null){
+                socket.send('坐标x:'+x+", 坐标y:"+y);
+            }
+        }
+
+
+//        var ws = new WebSocket("ws://localhost:9000");
+//        ws.onopen = function () {
+//            try {
+//                ws.send("Hello, Web Socket");
+//            }catch (e){
+//                console.log("发送消息失败");
+//            }
+//        }
+
+    </script>
+</head>
+<body>
+服务器地址：<input type="text" id="host" value="localhost">
+<input type="button" id="btnConn" value="连接服务器"> <br />
+收到的消息：<br />
+<textarea id="rmsg" cols="60" rows="10"></textarea>
+<br />
+<input type="text" id="smsg" size="60">
+<input type="button" id="btnSend" value="发送消息">
+
+
+</body>
+</html>

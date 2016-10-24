@@ -40,6 +40,7 @@
 
 <!--画板-->
 <canvas id="cav" width="400" height="300"></canvas>
+<br />
 <script src="../lib/jquery/jquery.min.js"></script>
 <script>
     // 定义画笔颜色
@@ -74,6 +75,7 @@
             // 获取鼠标的位置
             x = e.offsetX;
             y = e.offsetY;
+
             // 开始画路径
             ctx.beginPath();
             ctx.moveTo(x,y);
@@ -81,10 +83,12 @@
             can.on('mousemove',function (e) {
                 var nx = event.offsetX,
                     ny = event.offsetY;
+
                 ctx.lineTo(nx,ny);
                 ctx.stroke();
                 x = nx;
                 y = ny;
+
             });
 
             // 绑定抬起事件
@@ -98,6 +102,8 @@
     $(function () {
         initBrush();
         initPainter();
+
+
     })
 
 

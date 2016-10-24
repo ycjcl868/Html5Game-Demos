@@ -3,14 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>本地存储</title>
+    <script src="../lib/jquery/jquery.min.js"></script>
     <script>
         /**
          * 客户端保留数据 原采用Cookie,但只有4KB
          *
+         * 提供两种方法:
+         * localStorage    一直存在
+         * sessionStorage  数据随着浏览器的关闭而消失
+         * sessionStorage/localStorage.setItem(key,value)
+         * sessionStorage/localStorage.getItem(key)
          */
+        $(function () {
+            // 获取访问次数
+            readCount();
+        });
+        // 获取访问次数
+        function readCount() {
+            var count = localStorage["count"];
+            if(count == null){
+                count = 1;
+            }else {
+                count = Number(count) + 1;
+            }
+            $('#ct').text(count);
+            localStorage["count"] = count;
+        }
+
+
     </script>
 </head>
 <body>
+<h2>你是第 <span id="ct"></span>次访问本页面</h2>
 
 </body>
 </html>
