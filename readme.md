@@ -10,7 +10,11 @@
 
 ### 第1章 游戏和HTML5初探
 
---------
+初步介绍了`canvas`、`WebGL`、`media`、`webSocket`、`webWorker`、`localStorage`、`geolocation`等新特性。
+
+
+
+### 第2章 Canvas绘图
 
 
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多线程</title>
+    <style>
+        body,div{
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+    </style>
+    <script src="../lib/jquery/jquery.min.js"></script>
+</head>
+<body>
+<input type="button" id="btn_calc" value="计算圆周率">
+<input id="txt_rt">
+
+<script>
+    $(function () {
+        $('#btn_calc').click(function () {
+//            $('#txt_rt').val(getPI(800000000));
+            var wk = new Worker('worker.js');
+
+//            注册返回结果，当worker发送postmessage时，该回调函数响应
+            wk.onmessage = function (e) {
+                $('#txt_rt').val(e.data);
+            };
+            wk.postMessage(8000000);
+        })
+    })
+
+
+</script>
+</body>
+</html>
