@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>嵌套矩形</title>
+</head>
+<body>
+<h2>画矩形</h2>
+<canvas id="can" width="400" height="300"></canvas>
+
+<script>
+    var can = document.getElementById('can');
+
+    var ctx = can.getContext('2d');
+
+    var width = can.width,
+            height = can.height;
+//    计算最里面矩形左上角坐标，边长为10
+    var xOff = width*0.5+5, yOff = height*0.5+5;
+    console.log(width);
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(xOff,yOff,10,10);
+    for(var i = 0; i < 8;i++){
+//        以最里面矩形为中心，画同心矩形，边长增加20
+        ctx.strokeRect(xOff-10*i,yOff-10*i,i*20+10,i*20+10);
+    }
+
+</script>
+
+</body>
+</html>

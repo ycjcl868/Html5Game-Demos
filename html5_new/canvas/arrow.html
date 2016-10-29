@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>画个箭头</title>
+</head>
+<body>
+
+<canvas id="can" width="400" height="300">
+    你的浏览器不支持canvas
+</canvas>
+
+<script>
+    var can = document.getElementById('can');
+    var ctx = can.getContext('2d');
+    var width = can.width,
+            height = can.height;
+    var pts = [[30,100],[300,100],[300,50],[350,130],[300,210],[300,160],[30,160]];
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 2;
+    ctx.moveTo(pts[0][0],pts[0][1]);
+    for(var i = 0; i < pts.length;i++){
+        ctx.lineTo(pts[i][0],pts[i][1]);
+    }
+    ctx.closePath();  //会将第一个点和最后一个点连起来
+    ctx.stroke();
+
+</script>
+</body>
+</html>
