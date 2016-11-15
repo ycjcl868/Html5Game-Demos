@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绘制文字</title>
+</head>
+
+<body>
+<img src="../../images/box.png" id="img1" alt="">
+<canvas id="can" width="400" height="300"></canvas>
+<script>
+    /**
+     * fillText(text,x,y,[maxWidth])  填充文字
+     * strokeText(text,x,y,[maxWidth])  描边
+     * font：字体属性
+     * textAlign: 对齐方式
+     *
+     */
+    function $(id) {
+        return document.getElementById(id);
+    }
+
+    function draw() {
+        ctx.drawImage(img,0,0);
+    }
+    var can = $("can");
+    var ctx = can.getContext('2d');
+    var img = $("img1");
+    ctx.strokeStyle = 'red';
+    ctx.fillStyle = 'blue';
+
+    ctx.font = 'bold 40px sans-serif';
+    ctx.strokeText("WelCome To Html5",10,50);
+
+    ctx.fillText("Welcome To Html5", 10,100);
+
+
+    document.body.onload = function () {
+
+        ctx.globalAlpha = 0;
+        var tHandle = window.setInterval(function () {
+            ctx.globalAlpha+=0.05;
+            draw();
+            if(ctx.globalAlpha>=0.95){
+                window.clearInterval(tHandle);
+            }
+        },100)
+    };
+
+
+
+</script>
+
+
+</body>
+</html>

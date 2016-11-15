@@ -7,6 +7,8 @@ function getPI(n) {
     return a;
 
 }
+
+
 onmessage = function (e) {
     var result = getPI(e.data);
     postMessage(result);

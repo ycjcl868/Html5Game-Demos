@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>坐标变换</title>
+    <style>
+        canvas{
+            border:1px solid red;
+        }
+    </style>
+</head>
+<body>
+
+<img src="../../images/box.png" id="img1" alt="">
+
+<canvas id="can" width="300" height="500"></canvas>
+
+<script>
+
+    /**
+     * 公布的一组 API
+     * translate(x,y):  平移 , 坐标原点
+     * scale(x,y): 缩放，把画布放大, x：水平放大倍数   y：垂直放大倍数
+     * rotate(angle): 把图形进行旋转，旋转的中心是坐标原点，顺时针旋转，以弧度表示
+     * transform(m11,m12,m21,m22,dx,dy) 乘上这个矩阵
+     * setTransform(m11,m12,m21,m22,dx,dy)  设置这个矩阵
+     *
+     *
+     *
+     */
+
+    function $(id) {
+        return document.getElementById(id);
+    }
+
+    document.body.onload = function () {
+        console.log($("can"));
+        var ctx = $("can").getContext('2d');
+        // 获取中心
+        var cx = $("can").width*0.5,
+                cy = $("can").height*0.5;
+        // 获取宽高
+        var iw = $("img1").width,
+                ih = $("img1").height;
+        // 平移到中心
+        ctx.translate(cx,cy);
+        ctx.drawImage($('img1'),-iw*0.5,-ih*0.5);
+
+    }
+
+    
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>填充圆形例子（多线程改进版）</title>
+
+
+</head>
+<body>
+
+<h2>填充圆形例子</h2>
+<canvas id="can" width="400" height="300"></canvas>
+
+<script>
+    var can = document.getElementById('can');
+    var ctx = can.getContext('2d');
+    var width = can.width,
+            height = can.height;
+    var wk = new Worker('worker.js');
+    var xOff = width*0.5,
+            yOff = height*0.5;
+
+
+
+    for(var i = 1;i <= 8; i++){
+        wk.onmessage = function (e) {
+            ctx.beginPath();
+            ctx.fillStyle = e.data[0];
+            ctx.arc(xOff,yOff,e.data[1],0,Math.PI*2,true);
+            ctx.closePath();
+            ctx.fill();
+        };
+        wk.postMessage(i);
+    }
+
+
+</script>
+
+</body>
+</html>

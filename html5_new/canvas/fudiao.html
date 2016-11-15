@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>浮雕</title>
+
+</head>
+<body>
+<img src="../../images/box.png" id="img1" alt="">
+<input type="button" id="btn"  value="转成浮雕效果">
+<canvas id="can" width="320" height="200"></canvas>
+
+
+<script>
+    function $(id) {
+        return document.getElementById(id);
+    }
+    
+    function init() {
+        var c1 = $('can');
+        var img1 = $('img1');
+        $('btn').onclick = function () {
+            c1.width = img1.width;
+            c1.height = img1.height;
+            var ctx =  c1.getContext('2d');
+            ctx.drawImage(img1,0,0,c1.width,c1.height);
+            // 获取像素数据
+            var imgData = ctx.getImageData(0,0,c1.width,c1.height);
+//            console.log(imgData);
+            var iData = imgData.data;
+            for(var i = 0;i < img1.height-1; i++){
+                for(var j = 0;j < img1.width; j++){
+                    // 获取像素在 dataImage起始位置
+                    var start = (i*img1.width+j)<<2;
+                    var r = iData[start]-iData[start+4]+128,
+                            g = iData[start+1]-iData[start+5]+128,
+                            b = iData[start+2]-iData[start+6]+128;
+                    // 越界处理
+                    r = (r<0)?0:(r>255)?255:r;
+                    g = (g<0)?0:(g>255)?255:g;
+                    b = (b<0)?0:(b>255)?255:b;
+
+                    // 转成灰度
+                    var t = (r*30+g*59+b*11+50)*0.01;
+                    iData[start] = t;
+                    iData[start+1] = t;
+                    iData[start+2] = t;
+
+
+
+
+
+                }
+
+
+            }
+
+            // 最后把imgData数据绘制到canvas
+            ctx.putImageData(imgData,0,0);
+
+
+
+
+
+        }
+    }
+
+    init();
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>放大镜</title>
+</head>
+<body>
+<img src="../../images/box.png" id="s1" alt="">
+
+<script>
+
+    function $(id) {
+        return document.getElementById(id);
+
+    }
+
+    var Glass = {
+        bind:function (imgId, zRat) {
+            var self = this;
+            this.canvas = document.createElement('canvas');
+            this.canvas.style.display = 'none';
+            this.canvas.style.position = 'absolute';
+            this.ctx = this.canvas.getContext('2d');
+            this.canvas.width = 100;
+            this.canvas.height = 100;
+            this.hEle = $(imgId);
+            // 设置放大比例
+            this.zRat = zRat | 2;
+            // 设置鼠标点击事件
+            document.body.appendChild(this.canvas);
+            document.body.onmousedown = function (e) {
+                if(e.srcElement.id == imgId){
+                    e.preventDefault();
+                    draw(e);
+                    // 定制draw方法
+                    function draw(e) {
+                        // 获取鼠标位置
+                        var x = e.pageX,
+                                y = e.pageY;
+                        // 获取图片相对位置
+                        var exOff = x-self.hEle.offsetLeft,
+                                eyOff = y-self.hEle.offsetTop;
+                        // 设置获取图片周围长度
+                        var rLen = 50/self.zRat;
+                        self.copyImg(exOff-rLen,eyOff-rLen,rLen*2,rLen*2);
+                        self.show(x-50,y-50);
+                    }
+                    document.body.onmousemove = draw;
+                    document.body.onmouseup = function () {
+                        self.hide();
+                        document.body.onmousemove = null;
+                    }
+                }
+            }
+        },
+        copyImg:function (x, y, w, h) {
+            this.ctx.arc(50,50,50,0,Math.PI*2,true);
+            // 设置路径裁剪形成圆形
+            this.ctx.clip();
+            this.ctx.drawImage(this.hEle,x,y,w,h,0,0,100,100);
+        },
+        show:function (x, y) {
+            this.canvas.style.display = 'block';
+            this.canvas.style.pixelLeft = x;
+            this.canvas.style.pixelTop = y;
+        },
+        hide:function () {
+            this.canvas.style.display = 'none';
+        }
+    };
+    Glass.bind('s1');
+</script>
+
+</body>
+</html>

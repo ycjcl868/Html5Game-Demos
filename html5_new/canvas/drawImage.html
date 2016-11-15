@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片显示</title>
+    <script src="../../lib/jquery/jquery.min.js"></script>
+
+</head>
+<body>
+<img id="img" src="../../images/box.png" alt="">
+<input type="button" id="btnCopy" value="拷贝图片">
+<canvas id="can" width="1600" height="300"></canvas>
+
+
+<script>
+    var offsetWidth = 0;
+    $('#btnCopy').click(function () {
+        var can = $('#can')[0];
+        var image = $('#img')[0];
+        var ctx = can.getContext('2d');
+
+        ctx.drawImage(image,offsetWidth,0);
+
+        offsetWidth += image.width;
+        console.log(offsetWidth);
+
+
+    })
+
+</script>
+
+</body>
+</html>
